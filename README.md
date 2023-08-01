@@ -1,2 +1,2 @@
-# Real-time-Recommender-System-for-E-commerce-using-Kafka-and-RisingWave
-The Real-time Recommender System for E-commerce delivers personalized product recommendations based on real-time interactions. 
+# Real-time Recommender System for E-commerce using Kafka and RisingWave
+The Real-time Recommender System for E-commerce aims to deliver personalized and timely product recommendations to users based on their real-time interactions and preferences. The project will utilize a real-world dataset from an E-commerce platform, stream data through Kafka, and perform real-time stream processing using RisingWave. By incorporating continuous online training and batch training, the system will continuously update its machine learning models to ensure accurate and up-to-date recommendations.
