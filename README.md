@@ -31,7 +31,7 @@ Create a local.env file and fill its values as:
 | EXPORT_TO_APP | 0-1 (0)  | Enable exporting predictions for inspections through Streamlit |
 ### Upload data to Kafka
 The dataset from H&M Personalized Fashion Recommendation Kaggle Challenge is used.
-*  Download the complete dataset and store it in the data directory such as `articles.csv`, `customers.csv`,`transactions.csv`, while uploading the downloaded images to cloud storage and create a file `url_of_images` as given in the `data` directory.  
+*  Download the complete dataset and store it in the `data` directory such as `articles.csv`, `customers.csv`,`transactions.csv`, while uploading the downloaded images to cloud storage and create a file `url_of_images` as given in the `data` directory.  
 * Create four topics in Confluent Cloud with default settings such as `articles_topic`, `customers_topic`, `images_topic`, and `transactions_topic`.
 * cd to `kafka` directory and run the `producer.py` to upload all the data to the corresponding Kafka topics. 
 ### Ingesting Data from Confluent Cloud into RisingWave Cloud
