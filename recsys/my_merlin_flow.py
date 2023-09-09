@@ -1,15 +1,43 @@
 """
 
-We run a serverless, "hands-off" stack to train cutting edge deep neural network models for recommendations.
 
-The pipeline is as follows:
+Merlin Flow for Building and Serving Recommendation Models
 
-    * Snowflake as data warehouse;
-    * Metaflow as the pipeline backbone and abstraction over AWS;
-    * Merlin for recommendation models;
-    * Dynamo (+ lambda) for FaaS/PaaS deployment.
+This script defines a Metaflow flow for building and serving recommendation models using the Merlin framework.
+The flow consists of several steps, including data preparation, model training, model evaluation, and serving predictions.
+It leverages various external libraries and tools, including TensorFlow, PyArrow, and Comet ML for experiment tracking.
 
-Please check the README and the additional material for the relevant background and context.
+The flow parameters and steps are organized as follows:
+
+Parameters:
+- MODEL_FOLDER: Folder to store the model from Merlin between steps.
+- TRAINING_END_DATE: Data up until this date is used for training.
+- VALIDATION_END_DATE: Data after training end and until this date is used for validation.
+- COMET_PROJECT_NAME: Name of the project in the Comet dashboard.
+- VALIDATION_METRIC: Merlin metric used for selecting the best set of hyperparameters.
+- N_EPOCHS: Number of epochs to train the Merlin model.
+- TOP_K: Number of products to recommend for a given shopper.
+- EN_BATCH: Flag to enable AWS Batch (currently disabled).
+- COMET_API_KEY: API key for Comet ML experiment tracking.
+- EXPORT_TO_APP: Flag to export data to a Streamlit app (currently skipped).
+- SAVE_TO_CACHE: Flag to save predictions to a DynamoDB cache.
+- METAFLOW_USER: Environment variable specifying the Metaflow user.
+
+
+Steps (abbreviated):
+- start: Initialization step for checking configurations.
+- get_dataset: Retrieves and preprocesses data from RisingWave Cloud.
+- build_workflow: Uses NVTabular to transform data for training.
+- train_model: Trains recommendation models in parallel with different hyperparameters.
+- join_runs: Merges results from different model runs.
+- model_testing: Tests the best model's generalization abilities.
+- saving_predictions: Prepares and logs predictions for inspection.
+- export_to_app: Exports data for a Streamlit app (optional).
+- end: Final step for concluding the flow.
+
+
+
+
 
 """
 from custom_decorators import enable_decorator, pip, magicdir
