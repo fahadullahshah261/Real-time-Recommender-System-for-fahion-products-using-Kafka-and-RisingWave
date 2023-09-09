@@ -83,6 +83,9 @@ https://github.com/fahadullahshah261/Real-time-Recommender-System-for-fahion-pro
 
 Finally, visit [Comet ML Account](https://www.comet.com/site/pricing/) to access comprehensive results of the machine learning lifecycle, including various hyperparameters and corresponding metrics like model accuracy and its loss and for model tracking.
 
+![comet](https://github.com/fahadullahshah261/Real-time-Recommender-System-for-fahion-products-using-Kafka-and-RisingWave/assets/99340455/e88fae04-f016-4326-bbf2-d94345aeac66)
+
+
 ## Acknowledgments:
 This project could not have been completed without the help of the following:
 
