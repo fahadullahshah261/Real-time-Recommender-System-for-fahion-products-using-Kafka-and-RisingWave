@@ -1,6 +1,5 @@
 """
 
-
 Merlin Flow for Building and Serving Recommendation Models
 
 This script defines a Metaflow flow for building and serving recommendation models using the Merlin framework.
@@ -34,10 +33,6 @@ Steps (abbreviated):
 - saving_predictions: Prepares and logs predictions for inspection.
 - export_to_app: Exports data for a Streamlit app (optional).
 - end: Final step for concluding the flow.
-
-
-
-
 
 """
 from custom_decorators import enable_decorator, pip, magicdir
@@ -648,37 +643,7 @@ class myMerlinFlow(FlowSpec):
             # save the dataframe as a Metaflow artifact
             self.prediction_df = df
 
-        self.next(self.cache_predictions)
-
-    @step
-    def cache_predictions(self):
-        """
-        Use DynamoDb as a cache and a Lambda (in the serverless folder, check the README)
-        to serve pre-computed predictions in a PaaS/FaaS manner.
-
-        Note (see train_model above): we are just storing the predictions for the winning model, as 
-        computed in the training step.
-
-        """
-        # skip the deployment if not needed
-        if not SAVE_TO_CACHE==1:
-            print("Skipping deployment")
-        else:
-            print("Caching predictions in DynamoDB")
-            import boto3
-            dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
-            table = dynamodb.Table(self.DYNAMO_TABLE)
-            # upload some static items as a test
-            data = [{'userId': user, 'recs': json.dumps(recs) } for user, recs in self.best_predictions.items()] 
-            # finally add test user
-            data.append({'userId': 'no_user', 'recs': json.dumps(['test_rec_{}'.format(_) for _ in range(int(self.TOP_K))])})
-            # loop over predictions and store them in the table
-            with table.batch_writer() as writer:
-                for item in data:
-                    writer.put_item(Item=item)
-            print("Predictions are all cached in DynamoDB")
-
-        self.next(self.end)
+            self.next(self.end)
 
     @step
     def end(self):
