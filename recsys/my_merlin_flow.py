@@ -19,7 +19,6 @@ Parameters:
 - EN_BATCH: Flag to enable AWS Batch (currently disabled).
 - COMET_API_KEY: API key for Comet ML experiment tracking.
 - EXPORT_TO_APP: Flag to export data to a Streamlit app (currently skipped).
-- SAVE_TO_CACHE: Flag to save predictions to a DynamoDB cache.
 - METAFLOW_USER: Environment variable specifying the Metaflow user.
 
 
@@ -48,7 +47,7 @@ os.environ['METAFLOW_USER'] = 'risingwave'
 
 try:
     from dotenv import load_dotenv
-    load_dotenv(verbose=True, dotenv_path='.env')
+    load_dotenv(verbose=True, dotenv_path='local.env')
 except:
     print("No dot env!")
 
@@ -65,8 +64,6 @@ class myMerlinFlow(FlowSpec):
     )
 
     
-    
-
     #NOTE: data parameters - we split by time, leaving the last two weeks for validation and tests
     # The first date in the table is 2018-09-20
     # The last date in the table is 2020-09-22
@@ -102,8 +99,6 @@ class myMerlinFlow(FlowSpec):
         default='1' # default to 1 for quick testing
     )
 
-   
-
     TOP_K = Parameter(
         name='top_k',
         help='Number of products to recommend for a giver shopper',
@@ -119,7 +114,7 @@ class myMerlinFlow(FlowSpec):
         print("flow name: %s" % current.flow_name)
         print("run id: %s" % current.run_id)
         print("username: %s" % current.username)
-        self.COMET_API_KEY='RgAWSIodR7RGtXekHvQ4WLckE'
+        self.COMET_API_KEY= os.environ.get(COMET_API_KEY)
         self.EN_BATCH=0
         
         print("ATTENTION: AWS BATCH DISABLED!") 
@@ -149,11 +144,8 @@ class myMerlinFlow(FlowSpec):
         # Update the path to the root certificate file
         root_certificate_path = '/root/.postgresql/root.crt'
 
-        connection_string = (
+        connection_string = os.environ.get(CONNECTION_STRING)
         
-        )
-
-
         conn = psycopg2.connect(connection_string)
         conn.autocommit = True  # Set queries to be automatically committed.
 
@@ -290,7 +282,7 @@ class myMerlinFlow(FlowSpec):
 
     @environment(vars={
                     'EN_BATCH': EN_BATCH,
-                    'COMET_API_KEY': COMET_API_KEY
+                    'COMET_API_KEY': os.environ.get(COMET_API_KEY)
                 })
     @enable_decorator(batch(
         # gpu=1, 
@@ -482,7 +474,7 @@ class myMerlinFlow(FlowSpec):
 
     @environment(vars={
                     'EN_BATCH': EN_BATCH,
-                    'COMET_API_KEY': COMET_API_KEY
+                    'COMET_API_KEY': os.environ.get(COMET_API_KEY)
                 })
     @enable_decorator(batch(
         image='public.ecr.aws/outerbounds/merlin-reasonable-scale:22.11-latest'),
