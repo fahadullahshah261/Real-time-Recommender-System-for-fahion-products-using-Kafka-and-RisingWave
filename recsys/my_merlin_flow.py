@@ -52,10 +52,7 @@ try:
 except:
     print("No dot env!")
 
-EN_BATCH=0
-COMET_API_KEY='5W0AEPpSpO4Fh8bzspP8eqQRp'
-EXPORT_TO_APP=1
-SAVE_TO_CACHE=0
+
 
 class myMerlinFlow(FlowSpec):
 
@@ -105,13 +102,7 @@ class myMerlinFlow(FlowSpec):
         default='1' # default to 1 for quick testing
     )
 
-    ### SERVING PARAMETERS ###
-
-    DYNAMO_TABLE = Parameter(
-        name='dynamo_table',
-        help='Name of dynamo db table to store the pre-computed recs. Default is same as in the serverless application',
-        default='userItemTable'
-    )
+   
 
     TOP_K = Parameter(
         name='top_k',
@@ -156,12 +147,10 @@ class myMerlinFlow(FlowSpec):
         import psycopg2
 
         # Update the path to the root certificate file
-        root_certificate_path = '/content/.postgresql/root.crt'
+        root_certificate_path = '/root/.postgresql/root.crt'
 
         connection_string = (
-        "postgresql://fahad:Ufaidshah3$@canary-useast2-eks-a.risingwave.cloud:4566/dev?"
-        "sslmode=verify-full&sslrootcert=" + root_certificate_path +
-        "&options=--tenant%3Drwc-g1h9dcm7ulf9pof9t8q0ksulvv-my-risingwave-cluster"
+        
         )
 
 
