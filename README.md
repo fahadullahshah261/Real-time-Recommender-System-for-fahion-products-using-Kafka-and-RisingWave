@@ -25,10 +25,10 @@ Create a virtual environment for dependency isolation.
 Create a local.env file and fill its values as:
 | VARIABLE | TYPE (DEFAULT) | MEANING |
 | ------------- | ------------- | ------------- |
-| BOOTSTRAP SERVER | string  | Kafka broker’s address  |
-| API KEY | string |  API key for Confluent Cloud  |
-| SECRET KEY | string  |  API secret key for Confluent Cloud   |
-| CONNECTION STRING | string |  Connection string to connect with Risingwave Cloud   |
+| BOOTSTRAP_SERVER | string  | Kafka broker’s address  |
+| API_KEY | string |  API key for Confluent Cloud  |
+| SECRET_KEY | string  |  API secret key for Confluent Cloud   |
+| CONNECTION_STRING | string |  Connection string to connect with Risingwave Cloud   |
 | COMET_API_KEY | string  | Comet ML API key  |
 | EXPORT_TO_APP | 0-1 (0)  | Enable exporting predictions for inspections through Streamlit |
 ### Upload data to Kafka
