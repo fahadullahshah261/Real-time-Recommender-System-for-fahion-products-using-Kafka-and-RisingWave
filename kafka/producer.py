@@ -38,11 +38,11 @@ def produce_csv_to_kafka(producer, csv_file_path, kafka_topic,batch_size):
 if __name__ == "__main__":
     # Read Confluent Cloud configuration
     kafka_conf = {
-        'bootstrap.servers': os.getenv('BOOTSTRAP SERVERS'),
+        'bootstrap.servers': os.getenv('BOOTSTRAP_SERVERS'),
         'security.protocol': 'SASL_SSL',
         'sasl.mechanisms': 'PLAIN',
-        'sasl.username': os.getenv('API KEY'),
-        'sasl.password':os.getenv( 'SECRET KEY'),
+        'sasl.username': os.getenv('API_KEY'),
+        'sasl.password':os.getenv( 'SECRET_KEY'),
         'batch.num.messages': 1000000,  # Set batch size
         # 'linger.ms': 10000
     }
@@ -51,19 +51,19 @@ if __name__ == "__main__":
     # Define a list of configurations for different CSV-Kafka operations
     operations = [
     {
-        'csv_file_path': '/root/customers.csv',
+        'csv_file_path': '/path/to/your/directory/data/customers.csv',
         'kafka_topic': 'customers_topic',
     },
     {
-        'csv_file_path': '/root/articles.csv',
+        'csv_file_path': '/path/to/your/directory/data/articles.csv',
         'kafka_topic': 'articles_topic',
     },
     {
-        'csv_file_path': '/root/url_of_images.csv',  
+        'csv_file_path': '/path/to/your/directory/data/url_of_images.csv',  
         'kafka_topic': 'images_topic',
     },
     {
-        'csv_file_path': '/root/transactions_train.csv',  
+        'csv_file_path': '/path/to/your/directory/data/transactions_train.csv',  
         'kafka_topic': 'transactions_topic',
     }
     ]
