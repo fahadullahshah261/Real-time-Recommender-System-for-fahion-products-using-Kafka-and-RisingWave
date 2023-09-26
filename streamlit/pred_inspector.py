@@ -54,20 +54,42 @@ def load_clip(device):
 
 def encode_text(text, model, tokenizer, processor):
     """
-    
+
     Encode text from: https://huggingface.co/spaces/DrishtiSharma/Image-search-using-CLIP/blob/main/app.py
-    
+
     """
     with torch.no_grad():
         inputs = tokenizer([text], padding=True, return_tensors="pt")
         inputs = processor(text=[text], images=None, return_tensors="pt", padding=True)
+
+        # Move inputs to GPU device
+        inputs = inputs.to(device)
+
         text_feature = model.get_text_features(**inputs)
         text_feature /= text_feature.norm(dim=-1, keepdim=True)
-    
-    return text_feature.detach().numpy()
 
+        # Detach text_feature from GPU and convert to NumPy array
+        text_feature = text_feature.detach().cpu().numpy()
+
+    return text_feature
 
 # App-specific code
+st.set_page_config(page_icon="", page_title="RisingWave RecSys")
+def add_bg_from_url():
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background-image: url("https://www.risingwave.com/wp-content/themes/risingwave/acf/blocks/animated-hero/img/wave-background-992.png");
+             background-attachment: fixed;
+             background-size: cover
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
+
+add_bg_from_url()
 
 
 # load data from metaflow and the CLIP model
